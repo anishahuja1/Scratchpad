@@ -2,6 +2,9 @@
 
 This is a full-stack web application built according to the provided Figma design for "Productr". 
 
+<img width="959" height="437" alt="image" src="https://github.com/user-attachments/assets/94d47da1-4545-43f6-a3e9-4436ef0a25ad" />
+<img width="959" height="442" alt="image" src="https://github.com/user-attachments/assets/6554f789-79b1-40cd-93be-e5c5061d30b3" />
+
 ## Tech Stack
 - **Frontend:** React.js (Vite), Vanilla CSS, Framer Motion, React Router DOM, Axios
 - **Backend:** Node.js, Express.js, JWT Authentication
