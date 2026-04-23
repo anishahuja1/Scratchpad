@@ -4,6 +4,7 @@ import { AuthContext } from './context/AuthContext';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
+import StoreFront from './pages/StoreFront';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
@@ -26,6 +27,7 @@ function App() {
             <Products />
           </PrivateRoute>
         } />
+        <Route path="/my-store" element={<StoreFront />} />
       </Routes>
     </Router>
   );

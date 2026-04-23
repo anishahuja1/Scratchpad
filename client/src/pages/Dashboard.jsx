@@ -48,7 +48,7 @@ const Dashboard = () => {
           
           <div className="store-status-banner">
             <div className="status-content">
-              <h3>Your store is live here: <a href="https://store.productr.com/my-store" target="_blank" rel="noreferrer">store.productr.com/my-store</a></h3>
+              <h3>Your store is live here: <a href="/my-store" target="_blank" rel="noreferrer">localhost:5173/my-store</a></h3>
               <p>Connecting store anytime anywhere.</p>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { X, UploadCloud } from 'lucide-react';
 import './AddProductModal.css';
@@ -20,6 +20,23 @@ const AddProductModal = ({ onClose, onSuccess }) => {
   
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [imagePreview, setImagePreview] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        setError('File size should not exceed 5MB');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -40,7 +57,8 @@ const AddProductModal = ({ onClose, onSuccess }) => {
         quantityStock: Number(formData.quantityStock),
         mrp: Number(formData.mrp),
         sellingPrice: Number(formData.sellingPrice),
-        isReturnable: formData.isReturnable.toString() === 'true'
+        isReturnable: formData.isReturnable.toString() === 'true',
+        images: imagePreview ? [imagePreview] : []
       });
       onSuccess();
     } catch (err) {
@@ -125,10 +143,36 @@ const AddProductModal = ({ onClose, onSuccess }) => {
           
           <div className="form-group mt-3">
             <label>Upload Product Images</label>
-            <div className="upload-area">
-              <UploadCloud size={32} className="upload-icon" />
-              <p>Drag and drop or <span className="browse-link">Browse</span> to upload</p>
-              <span className="upload-hint">PNG, JPG, GIF up to 5MB</span>
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              style={{ display: 'none' }} 
+              accept="image/png, image/jpeg, image/gif" 
+              onChange={handleFileChange} 
+            />
+            <div className="upload-area" onClick={() => fileInputRef.current.click()}>
+              {imagePreview ? (
+                <div style={{ position: 'relative' }}>
+                  <img src={imagePreview} alt="Preview" style={{ height: '120px', borderRadius: '8px', objectFit: 'contain' }} />
+                  <button 
+                    type="button" 
+                    style={{ position: 'absolute', top: '-10px', right: '-10px', background: 'white', borderRadius: '50%', padding: '4px', border: '1px solid #ccc', cursor: 'pointer' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setImagePreview(null);
+                      if (fileInputRef.current) fileInputRef.current.value = '';
+                    }}
+                  >
+                    <X size={14} color="red" />
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <UploadCloud size={32} className="upload-icon" />
+                  <p>Drag and drop or <span className="browse-link">Browse</span> to upload</p>
+                  <span className="upload-hint">PNG, JPG, GIF up to 5MB</span>
+                </>
+              )}
             </div>
           </div>
           

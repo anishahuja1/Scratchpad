@@ -87,51 +87,71 @@ const Products = () => {
                 </button>
               </div>
             ) : (
-              <div className="table-responsive">
-                <table className="products-table">
-                  <thead>
-                    <tr>
-                      <th>Product Name</th>
-                      <th>Status</th>
-                      <th>Category</th>
-                      <th>Selling Price</th>
-                      <th>Quantity Stock</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredProducts.map(product => (
-                      <tr key={product._id}>
-                        <td>
-                          <div className="product-cell">
-                            <div className="product-thumbnail">
-                              {product.images && product.images.length > 0 ? (
-                                <img src={product.images[0]} alt={product.name} />
-                              ) : (
-                                <div className="placeholder-img">img</div>
-                              )}
-                            </div>
-                            <span className="product-name">{product.name}</span>
-                          </div>
-                        </td>
-                        <td>
-                          <span className={`badge ${product.status}`}>
-                            {product.status.charAt(0).toUpperCase() + product.status.slice(1)}
-                          </span>
-                        </td>
-                        <td>{product.category}</td>
-                        <td>${product.sellingPrice.toFixed(2)}</td>
-                        <td>{product.quantityStock}</td>
-                        <td>
-                          <div className="action-buttons">
-                            <button className="icon-btn edit"><Edit size={16} /></button>
-                            <button className="icon-btn delete" onClick={() => handleDelete(product._id)}><Trash2 size={16} /></button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="products-grid">
+                {filteredProducts.map(product => (
+                  <div className="product-card" key={product._id}>
+                    <div className="product-image-container">
+                      {product.images && product.images.length > 0 && !product.images[0].includes('via.placeholder') ? (
+                        <img src={product.images[0]} alt={product.name} />
+                      ) : (
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&q=80" alt={product.name} style={{ objectFit: 'cover' }} />
+                      )}
+                    </div>
+                    
+                    <div className="product-card-content">
+                      <h3 className="product-card-title">{product.name}</h3>
+                      <hr className="divider" />
+                      
+                      <div className="product-details-list">
+                        <div className="detail-row">
+                          <span className="detail-label">Product type</span>
+                          <span className="detail-value">{product.type}</span>
+                        </div>
+                        <div className="detail-row">
+                          <span className="detail-label">Quantity Stock</span>
+                          <span className="detail-value">{product.quantityStock}</span>
+                        </div>
+                        <div className="detail-row">
+                          <span className="detail-label">MRP</span>
+                          <span className="detail-value">₹ {product.mrp}</span>
+                        </div>
+                        <div className="detail-row">
+                          <span className="detail-label">Selling price</span>
+                          <span className="detail-value">₹ {product.sellingPrice}</span>
+                        </div>
+                        <div className="detail-row">
+                          <span className="detail-label">Brand Name</span>
+                          <span className="detail-value">{product.brandName || '-'}</span>
+                        </div>
+                        <div className="detail-row">
+                          <span className="detail-label">Total Number of Images</span>
+                          <span className="detail-value">{product.images ? product.images.length : 0}</span>
+                        </div>
+                        <div className="detail-row">
+                          <span className="detail-label">Exchange Eligibility</span>
+                          <span className="detail-value">{product.isReturnable ? 'Yes' : 'No'}</span>
+                        </div>
+                      </div>
+                      
+                      <hr className="divider" />
+                      
+                      <div className="product-card-actions">
+                        <button 
+                          className={`btn-action status-btn ${product.status === 'published' ? 'btn-unpublish' : 'btn-publish'}`}
+                        >
+                          {product.status === 'published' ? 'Unpublish' : 'Publish'}
+                        </button>
+                        
+                        <div className="right-actions">
+                          <button className="btn-action edit-btn">Edit</button>
+                          <button className="btn-action delete-btn" onClick={() => handleDelete(product._id)}>
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>

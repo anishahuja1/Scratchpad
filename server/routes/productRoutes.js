@@ -3,6 +3,16 @@ const router = express.Router();
 const Product = require('../models/Product');
 const { protect } = require('../middleware/auth');
 
+// @route GET /api/products/public
+router.get('/public', async (req, res) => {
+  try {
+    const products = await Product.find({ status: 'published' });
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // @route GET /api/products
 router.get('/', protect, async (req, res) => {
   try {

@@ -63,10 +63,7 @@
 }
 
 .products-content {
-  background-color: var(--white);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  overflow: hidden;
+  background-color: transparent;
   min-height: 400px;
 }
 
@@ -77,6 +74,9 @@
   justify-content: center;
   padding: 80px 20px;
   text-align: center;
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
 }
 
 .empty-icon-wrapper {
@@ -101,88 +101,156 @@
   color: var(--text-light);
 }
 
-.table-responsive {
-  overflow-x: auto;
+.products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
 }
 
-.products-table {
-  width: 100%;
-  border-collapse: collapse;
+.product-card {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.products-table th, .products-table td {
-  padding: 16px 24px;
-  text-align: left;
-  border-bottom: 1px solid var(--border-color);
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
 }
 
-.products-table th {
-  background-color: var(--gray-bg);
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--text-light);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.products-table td {
-  font-size: 14px;
-  color: var(--text-dark);
-  vertical-align: middle;
-}
-
-.product-cell {
+.product-image-container {
+  height: 180px;
+  background-color: #f9fafb;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-color);
+  padding: 20px;
 }
 
-.product-thumbnail {
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
+.product-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product-card-content {
+  padding: 20px;
+}
+
+.product-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+  white-space: nowrap;
   overflow: hidden;
-  background-color: var(--gray-bg);
+  text-overflow: ellipsis;
+}
+
+.product-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.detail-label {
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+.detail-value {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.divider {
+  border: 0;
+  height: 1px;
+  background: var(--border-color);
+  margin: 16px 0;
+}
+
+.product-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-action {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.product-thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.status-btn {
+  padding: 8px 24px;
 }
 
-.placeholder-img {
-  font-size: 10px;
-  color: var(--text-light);
-  text-transform: uppercase;
+.btn-unpublish {
+  background-color: #F1F5F9;
+  color: #475569;
+  border: 1px solid #CBD5E1;
 }
 
-.product-name {
-  font-weight: 500;
+.btn-unpublish:hover {
+  background-color: #E2E8F0;
 }
 
-.action-buttons {
+.btn-publish {
+  background-color: var(--success);
+  color: white;
+  border: 1px solid var(--success);
+}
+
+.btn-publish:hover {
+  background-color: #16A34A;
+}
+
+.right-actions {
   display: flex;
   gap: 8px;
 }
 
-.icon-btn {
-  background: none;
-  padding: 8px;
-  border-radius: 6px;
-  color: var(--text-light);
-  transition: all 0.2s;
-}
-
-.icon-btn:hover {
-  background-color: var(--gray-bg);
+.edit-btn {
+  background-color: var(--white);
   color: var(--text-dark);
+  border: 1px solid var(--border-color);
 }
 
-.icon-btn.delete:hover {
-  background-color: #FEE2E2;
+.edit-btn:hover {
+  background-color: var(--gray-bg);
+}
+
+.delete-btn {
+  background-color: var(--white);
+  color: var(--text-light);
+  border: 1px solid var(--border-color);
+  padding: 8px;
+}
+
+.delete-btn:hover {
   color: var(--error);
+  border-color: var(--error);
+  background-color: #FEE2E2;
 }
