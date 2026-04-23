@@ -1,7 +1,59 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
+const User = require('../models/User');
 const { protect } = require('../middleware/auth');
+
+// @route GET /api/products/seed-db
+router.get('/seed-db', async (req, res) => {
+  try {
+    await User.deleteMany();
+    await Product.deleteMany();
+
+    const user = await User.create({
+      name: 'Admin User',
+      emailOrPhone: '9166927838',
+      password: 'password123',
+    });
+
+    await Product.create([
+      {
+        user: user._id,
+        name: 'CakeZone Walnut Brownie',
+        type: 'Food',
+        category: 'Dessert',
+        quantityStock: 50,
+        mrp: 5.99,
+        sellingPrice: 4.99,
+        brandName: 'CakeZone',
+        description: 'Delicious chocolate brownie with walnuts.',
+        images: ['https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&q=80'],
+        isReturnable: false,
+        storeLocation: 'Store 1',
+        status: 'published'
+      },
+      {
+        user: user._id,
+        name: 'Apple iPhone 14',
+        type: 'Electronics',
+        category: 'Gadgets',
+        quantityStock: 10,
+        mrp: 999.00,
+        sellingPrice: 899.00,
+        brandName: 'Apple',
+        description: 'Latest model iPhone.',
+        images: ['https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80'],
+        isReturnable: true,
+        storeLocation: 'Store 2',
+        status: 'published'
+      }
+    ]);
+
+    res.json({ message: 'Database successfully seeded!' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 // @route GET /api/products/public
 router.get('/public', async (req, res) => {
